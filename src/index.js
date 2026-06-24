@@ -21,15 +21,34 @@ class Node {
   }
 }
 
-function knightMoves(startPos, endPos) {
-  const startNode = new Node(startPos);
-  startNode.generatePossibleMoves();
-  let queue = [];
-  let visitedList = [];
+function knightMoves(
+  startPos,
+  endPos,
+  queue = [],
+  visitedList = [],
+  path = [],
+) {
+  path.push(startPos);
+  console.log(startPos, endPos);
+  if (startPos[0] === endPos[0] && startPos[1] === endPos[1]) return;
 
-  queue.push(...startNode.possibleMovesList);
+  // if (visitedList.includes(startPos)) return;
+  const currentNode = new Node(startPos);
+  currentNode.generatePossibleMoves();
+  queue.push(...currentNode.possibleMovesList);
+  // const firstElement = queue.shift();
+  let firstElement = null;
+  for (let i = 0; i < queue.length; i++) {
+    const element = queue.shift();
+    if (!visitedList.includes(element)) {
+      firstElement = element;
+      break;
+    }
+  }
 
-  return queue;
+  visitedList.push(startPos);
+  knightMoves(firstElement, endPos, queue, visitedList, path);
+  return path;
 }
-
+console.table(knightMoves([0, 0], [3, 3]));
 export { Node, knightMoves };
