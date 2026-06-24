@@ -1,7 +1,7 @@
-import { Knight, knightMoves } from "./index.js";
-describe("test Knight class", () => {
+import { Node, knightMoves } from "./index.js";
+describe("test Node class", () => {
   test("populate possibleMovesList with all possible moves", () => {
-    const knightPos = new Knight([3, 3]);
+    const knightPos = new Node([3, 3]);
     knightPos.generatePossibleMoves();
     expect(knightPos.possibleMovesList).toEqual([
       [4, 5],
@@ -15,7 +15,7 @@ describe("test Knight class", () => {
     ]);
   });
   test("populate possibleMovesList with all possible moves, allow only positive values", () => {
-    const knightPos = new Knight([0, 0]);
+    const knightPos = new Node([0, 0]);
     knightPos.generatePossibleMoves();
     expect(knightPos.possibleMovesList).toEqual([
       [1, 2],
@@ -23,13 +23,21 @@ describe("test Knight class", () => {
     ]);
   });
   test("populate possibleMovesList with all possible moves, allow only values <= 7", () => {
-    const knightPos = new Knight([6, 6]);
+    const knightPos = new Node([6, 6]);
     knightPos.generatePossibleMoves();
     expect(knightPos.possibleMovesList).toEqual([
       [7, 4],
       [5, 4],
       [4, 5],
       [4, 7],
+    ]);
+  });
+});
+describe("test knightMoves function", () => {
+  test("populate queue with current possibilities", () => {
+    expect(knightMoves([0, 0], [4, 4])).toEqual([
+      [1, 2],
+      [2, 1],
     ]);
   });
 });

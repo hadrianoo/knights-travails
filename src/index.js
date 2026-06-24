@@ -1,4 +1,4 @@
-class Knight {
+class Node {
   constructor(knightPosition) {
     this.knightPosition = knightPosition;
     this.possibleMovesList = [];
@@ -21,6 +21,15 @@ class Knight {
   }
 }
 
-function knightMoves() {}
+function knightMoves(startPos, endPos) {
+  const startNode = new Node(startPos);
+  startNode.generatePossibleMoves();
+  let queue = [];
+  let visitedList = [];
 
-export { Knight, knightMoves };
+  queue.push(...startNode.possibleMovesList);
+
+  return queue;
+}
+
+export { Node, knightMoves };
