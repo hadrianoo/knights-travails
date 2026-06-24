@@ -1,4 +1,4 @@
-class Node {
+class Knight {
   constructor(knightPosition) {
     this.knightPosition = knightPosition;
     this.possibleMovesList = [];
@@ -7,6 +7,7 @@ class Node {
     if (posX >= 0 && posY >= 0 && posX <= 7 && posY <= 7)
       this.possibleMovesList.push([posX, posY]);
   }
+
   generatePossibleMoves() {
     const [x, y] = this.knightPosition;
     this.#addMove(x + 1, y + 2);
@@ -22,4 +23,4 @@ class Node {
 
 function knightMoves() {}
 
-export { Node, knightMoves };
+export { Knight, knightMoves };
