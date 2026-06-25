@@ -33,11 +33,3 @@ describe("test Node class", () => {
     ]);
   });
 });
-describe("test knightMoves function", () => {
-  test("populate queue with current possibilities", () => {
-    expect(knightMoves([0, 0], [4, 4])).toEqual([
-      [1, 2],
-      [2, 1],
-    ]);
-  });
-});

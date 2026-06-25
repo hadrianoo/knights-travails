@@ -2,6 +2,7 @@ class Node {
   constructor(knightPosition) {
     this.knightPosition = knightPosition;
     this.possibleMovesList = [];
+    this.generatePossibleMoves();
   }
   #addMove(posX, posY) {
     if (posX >= 0 && posY >= 0 && posX <= 7 && posY <= 7)
@@ -21,34 +22,29 @@ class Node {
   }
 }
 
-function knightMoves(
-  startPos,
-  endPos,
-  queue = [],
-  visitedList = [],
-  path = [],
-) {
-  path.push(startPos);
-  console.log(startPos, endPos);
-  if (startPos[0] === endPos[0] && startPos[1] === endPos[1]) return;
+function knightMoves(startPos, endPos) {
+  let queue = [startPos];
+  let visited = [startPos];
+  let path = [];
+  while (queue.length > 0) {
+    const firstElement = queue.shift();
+    const node = new Node(firstElement);
 
-  // if (visitedList.includes(startPos)) return;
-  const currentNode = new Node(startPos);
-  currentNode.generatePossibleMoves();
-  queue.push(...currentNode.possibleMovesList);
-  // const firstElement = queue.shift();
-  let firstElement = null;
-  for (let i = 0; i < queue.length; i++) {
-    const element = queue.shift();
-    if (!visitedList.includes(element)) {
-      firstElement = element;
-      break;
+    if (firstElement[0] === endPos[0] && firstElement[1] === endPos[1])
+      return path;
+    for (const possibleMove of node.possibleMovesList) {
+      if (
+        !visited.some(
+          (item) => item[0] === possibleMove[0] && item[1] === possibleMove[1],
+        )
+      ) {
+        visited.push(possibleMove);
+        queue.push(possibleMove);
+      }
     }
-  }
 
-  visitedList.push(startPos);
-  knightMoves(firstElement, endPos, queue, visitedList, path);
-  return path;
+    path.push(firstElement);
+  }
 }
-console.table(knightMoves([0, 0], [3, 3]));
+console.table(knightMoves([0, 0], [7, 7]));
 export { Node, knightMoves };
