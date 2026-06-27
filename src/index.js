@@ -49,10 +49,8 @@ function knightMoves(startPos, endPos) {
         if (nextMove[0] === endPos[0] && nextMove[1] === endPos[1]) {
           let result = [];
           let currentChild = nextMove;
-          let temp = null;
-          console.table(path);
           for (let i = path.length - 1; i >= 0; i--) {
-            temp = path[i].child;
+            const temp = path[i].child;
             if (temp === currentChild) {
               result.push(path[i].child);
               currentChild = path[i].mother;
@@ -65,5 +63,5 @@ function knightMoves(startPos, endPos) {
     }
   }
 }
-console.table(knightMoves([0, 0], [7, 7]));
+console.table(knightMoves([0, 0], [3, 3]));
 export { Node, knightMoves };
