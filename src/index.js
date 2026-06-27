@@ -34,6 +34,8 @@ function createPath(move, path, startPos) {
 }
 
 function knightMoves(startPos, endPos) {
+  if (startPos[0] === endPos[0] && startPos[1] === endPos[1])
+    return [startPos, endPos];
   let queue = [{ lastPos: null, currentPos: startPos }];
   let visited = new Set(startPos);
   let path = [];
@@ -56,5 +58,5 @@ function knightMoves(startPos, endPos) {
     }
   }
 }
-console.table(knightMoves([3, 3], [4, 3]));
+console.table(knightMoves([0, 0], [0, 0]));
 export { Node, knightMoves };
