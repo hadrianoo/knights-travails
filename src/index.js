@@ -35,7 +35,7 @@ function createPath(move, path, startPos) {
 
 function knightMoves(startPos, endPos) {
   let queue = [{ lastPos: null, currentPos: startPos }];
-  let visited = [startPos];
+  let visited = new Set(startPos);
   let path = [];
 
   while (queue.length > 0) {
@@ -43,12 +43,8 @@ function knightMoves(startPos, endPos) {
     const node = new Node(firstElement);
 
     for (const nextMove of node.nextMovesList) {
-      if (
-        !visited.some(
-          (item) => item[0] === nextMove[0] && item[1] === nextMove[1],
-        )
-      ) {
-        visited.push(nextMove);
+      if (!visited.has(`${nextMove[0]},${nextMove[1]}`)) {
+        visited.add(nextMove);
 
         queue.push({ lastPos: firstElement, currentPos: nextMove });
         path.push({ lastPos: firstElement, currentPos: nextMove });
