@@ -49,4 +49,12 @@ describe("test knightMoves function", () => {
       [3, 3],
     ]);
   });
+  test("return correct path", () => {
+    expect(knightMoves([3, 3], [4, 3])).toEqual([
+      [3, 3],
+      [4, 5],
+      [6, 4],
+      [4, 3],
+    ]);
+  });
 });

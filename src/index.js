@@ -21,18 +21,25 @@ class Node {
     this.#addMove(x - 1, y + 2);
   }
 }
+function createPath(move, path, startPos) {
+  let result = [];
+  for (let i = path.length - 1; i >= 0; i--) {
+    if (path[i].currentPos === move) {
+      result.push(path[i].currentPos);
+      move = path[i].lastPos;
+    }
+  }
+  result.push(startPos);
+  return result.reverse();
+}
 
 function knightMoves(startPos, endPos) {
-  let pathObject = {
-    mother: null,
-    child: null,
-  };
-  pathObject.child = startPos;
-  let queue = [{ mother: null, child: startPos }];
+  let queue = [{ lastPos: null, currentPos: startPos }];
   let visited = [startPos];
   let path = [];
+
   while (queue.length > 0) {
-    const firstElement = queue.shift().child;
+    const firstElement = queue.shift().currentPos;
     const node = new Node(firstElement);
 
     for (const nextMove of node.nextMovesList) {
@@ -43,25 +50,15 @@ function knightMoves(startPos, endPos) {
       ) {
         visited.push(nextMove);
 
-        queue.push({ mother: firstElement, child: nextMove });
-        path.push({ mother: firstElement, child: nextMove });
+        queue.push({ lastPos: firstElement, currentPos: nextMove });
+        path.push({ lastPos: firstElement, currentPos: nextMove });
 
         if (nextMove[0] === endPos[0] && nextMove[1] === endPos[1]) {
-          let result = [];
-          let currentChild = nextMove;
-          for (let i = path.length - 1; i >= 0; i--) {
-            const temp = path[i].child;
-            if (temp === currentChild) {
-              result.push(path[i].child);
-              currentChild = path[i].mother;
-            }
-          }
-          result.push(startPos);
-          return result.reverse();
+          return createPath(nextMove, path, startPos);
         }
       }
     }
   }
 }
-console.table(knightMoves([0, 0], [3, 3]));
+console.table(knightMoves([3, 3], [4, 3]));
 export { Node, knightMoves };
